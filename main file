@@ -1,0 +1,150 @@
+Header File Matrix.h 
+// Function to input a matrix
+void inputMatrix(int mat[][3], int rows, int cols) {
+    cout << "Enter elements of the matrix:" << endl;
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cout << "Enter element at position (" << i + 1 << ", " << j + 1 << "): ";
+            cin >> mat[i][j];
+        }
+    }
+}
+
+// Function to display a matrix
+void displayMatrix(int mat[][3], int rows, int cols) {
+    cout << "Matrix:" << endl;
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cout << mat[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+
+// Function to add two matrices
+void addMatrices(int mat1[][3], int mat2[][3], int result[][3], int rows, int cols) {
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            result[i][j] = mat1[i][j] + mat2[i][j];
+        }
+    }
+}
+
+// Function to subtract two matrices
+void subtractMatrices(int mat1[][3], int mat2[][3], int result[][3], int rows, int cols) {
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            result[i][j] = mat1[i][j] - mat2[i][j];
+        }
+    }
+}
+
+// Function to multiply two matrices
+void multiplyMatrices(int mat1[][3], int mat2[][3], int result[][3], int rows1, int cols1, int cols2) {
+    for (int i = 0; i < rows1; ++i) {
+        for (int j = 0; j < cols2; ++j) {
+            result[i][j] = 0;
+            for (int k = 0; k < cols1; ++k) {
+                result[i][j] += mat1[i][k] * mat2[k][j];
+            }
+        }
+    }
+}
+Main Program
+#include<iostream> // header file 
+#include<iomanip> //iomanip header file
+using namespace std; // standard function 
+#include"Matrix.h" // userdefined header file Matrix.h
+int main() { // main function 
+	
+    int mat1[3][3], mat2[3][3], result[3][3], r1, c1, r2, c2, choice, y; // declaration of array and integers
+    string s1; // declaration of string 
+
+	cout <<"\t\t"<< setfill('*') << setw(55) << "" << endl; // using setw and setfill to display * on console 
+    cout <<"\t\t"<< "*            Semester Project C++                     *" << endl; //display  on console 
+    cout <<"\t\t"<< "*            (Matrix Calculator)                      *" << endl; //display  on console
+    cout <<"\t\t"<< "*                                                     *" << endl; //display  on console
+    cout <<"\t\t"<< "*                                                     *" << endl; //display  on console
+    cout <<"\t\t"<< "*                                                     *" << endl;//display  on console
+	cout <<"\t\t"<< setfill('*') << setw(55) << "" << endl; // using setw and setfill to display * on console
+
+	cout << "Please enter your name: "; //display  on console
+    getline(cin, s1); // using getline to get input from the user
+	cout<<endl; // endline 
+    cout << "Hello " << s1 << endl;  //display  on console
+    cout << "^----------------------------------------^" << endl;  //display  on console
+    cout << "          Welcome to Matrix Calculator          " << endl;  //display  on console
+    cout << endl;  //endline 
+    cout << endl; //endline 
+
+    do {
+        cout << "Enter the order of the first matrix: ";  //display  on console
+        cin >> r1 >> c1; // input from the user r1 and c1
+        cout << "Enter the order of the second matrix: ";  //display  on console
+        cin >> r2 >> c2; // input from the user r2 c2 
+
+        while (c1 != r2) {
+            cout << "Error! Column of the first matrix is not equal to the row of the second matrix." << endl;  //display  on console
+            cout << "Enter the order of the first matrix: ";  //display  on console
+            cin >> r1 >> c1; // input from the user
+            cout << "Enter the order of the second matrix: ";  //display  on console
+            cin >> r2 >> c2; // input from the user
+        }
+
+        inputMatrix(mat1, r1, c1); //function call of inputMatrix 1 
+        displayMatrix(mat1, r1, c1); //function call of  displayMatrix 1
+
+        inputMatrix(mat2, r2, c2);  //function call of inputMatrix 2 
+        displayMatrix(mat2, r2, c2); //function call of  displayMatrix 2
+
+		matrixOperation: // label of goto 
+		cout << "Which operation do you want to choose?" << endl; //display  on console
+        cout << "^-----------------------------------^" << endl; //display  on console
+        cout << "Enter your choice: " << endl; //display  on console
+        cout << "^---------------------^" << endl;//display  on console 
+        cout << "1: Addition of Matrices" << endl;//display  on console
+        cout << "2: Subtraction of Matrices" << endl; //display  on console
+        cout << "3: Multiplication of Matrices" << endl; //display  on console
+        cout << endl; 
+        cin >> choice; //input from the user
+		
+        switch (choice) { // switch statement
+            case 1:
+                cout << "----------------------------------" << endl;  //display  on console
+                cout << " ^--Addition of Matrices--^" << endl;  //display  on console
+                addMatrices(mat1, mat2, result, r1, c1); //function call of addMatrices
+                displayMatrix(result, r1, c1); //function call of displayMatrix
+                break; // break statement
+
+            case 2:
+                cout << "----------------------------------" << endl;  //display  on console
+                cout << " ^--Subtraction of Matrices--^" << endl;  //display  on console
+                subtractMatrices(mat1, mat2, result, r1, c1); //function call of subtractMatrices
+                displayMatrix(result, r1, c1);  //function call of displayMatrix
+                break; // break statement
+
+            case 3:
+                cout << "----------------------------------" << endl;  //display  on console
+                cout << " ^--Multiplication of Matrices--^" << endl;  //display  on console
+                multiplyMatrices(mat1, mat2, result, r1, c1, c2); //function call of multiplyMatrices  
+                displayMatrix(result, r1, c2); //function call of displayMatrix
+                break; // break statement
+
+            default:
+                cout << "Error! Invalid choice. Enter Again" << endl;  //display  on console
+                 goto matrixOperation; // go to label matrixOperation
+        }
+
+        cout << "Do you want to calculate again? Enter 1 for Yes and 0 for No: ";  //display  on console
+        cin >> y; // input from the user
+        cout << endl; //display  on console
+
+    } while (y != 0); // do while loop condition 
+
+    cout << " ***************************" << endl; //display  on console
+    cout << " *                         *" << endl; //display  on console
+    cout << " *  Thank You for Visiting *" << endl; //display  on console
+    cout << " *                         *" << endl; //display  on console
+    cout << " ***************************" << endl; //display  on console
+
+} // end of main program
